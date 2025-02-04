@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Ajax</title>
+
+    <style>
+        .filmes{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: start;
+        }
+
+        main{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 200px;
+            margin-right: 200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="text-center p-3 mb-4 bg-black text-white">Busca de Filmes com API</h1>
+    </header>
+
+    <nav class="d-flex align-items-center">
+        <div class="input-group mb-3" style="width: 400px;margin-left: 40%;">
+            <input type="text" id="key" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            <button type="button" class="btn btn-dark">Procurar</button>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="filmes"></div>
+    </main>
+
+    <script>
+        let inputtext=document.querySelector("#key");
+        document.querySelector("button").addEventListener("click",()=>{
+            document.querySelector(".filmes").innerHTML="";
+            buscaFilmes(inputtext.value);
+        })
+        function buscaFilmes(keywork){
+            apikey= "6472d02b";
+            url=`http://www.omdbapi.com/?s=${keywork}&apikey=`+apikey
+
+            fetch(url)
+            .then(response=>response.json())
+            .then(dados=>{
+                console.log(dados);
+                dados.Search.forEach(element=>{
+                    document.querySelector(".filmes").innerHTML+=bannerFilme(element)
+                });
+            })
+        }
+
+        function bannerFilme(json){
+            poster=`
+            <div class="card poster bg-light" style="width: 18rem; padding: 10px;">
+                    <img src="${json.Poster}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">${json.Title}</h5>
+                        <p class="card-text"> Ano: ${json.Year}</p>
+                        <p class="card-text"> Tipo: ${json.Type}</p>
+                    </div>
+            </div>
+            `
+            return poster;
+        }
+    </script>
+</body>
+</html>
