@@ -75,11 +75,11 @@
         <div class="card-body">
             <div class="menu_Cronometro">
                 <div class="timer">
-                    <div id="minutes">00</div>
+                    <div id="minutos">00</div>
                     <div>:</div>
-                    <div id="seconds">00</div>
+                    <div id="segundos">00</div>
                     <div>:</div>
-                    <div id="milliseconds">000</div>
+                    <div id="milisegundos">000</div>
                 </div>
 
                 <div class="mt-4">
@@ -94,9 +94,9 @@
 
     <script>
 
-        const minutesElement = document.querySelector("#minutes");
-        const secondsElement = document.querySelector("#seconds");
-        const millisecondsElement = document.querySelector("#milliseconds");
+        const minutosElement = document.querySelector("#minutos");
+        const segundosElement = document.querySelector("#segundos");
+        const milisegundosElement = document.querySelector("#milisegundos");
         const botaoIniciar = document.querySelector("#botaoIniciar");
         const botaoPausar = document.querySelector("#botaoPausar");
         const botaoContinuar = document.querySelector("#botaoContinuar");
@@ -146,17 +146,17 @@
         function atualizarTempo() {
             const currentTime = Date.now();
             elapsedTime = currentTime - startTime;
-            const minutes = Math.floor(elapsedTime / 60000);
-            const seconds = Math.floor((elapsedTime % 60000) / 1000);
-            const milliseconds = elapsedTime % 1000;
+            const minutos = Math.floor(elapsedTime / 60000);
+            const segundos = Math.floor((elapsedTime % 60000) / 1000);
+            const milisegundos = elapsedTime % 1000;
 
-            atualizarDisplay(minutes, seconds, milliseconds);
+            atualizarDisplay(minutos, segundos, milisegundos);
         }
 
-        function atualizarDisplay(minutes, seconds, milliseconds) {
-            minutesElement.textContent = minutes;
-            secondsElement.textContent = seconds;
-            millisecondsElement.textContent = milliseconds;
+        function atualizarDisplay(minutos, segundos, milisegundos) {
+            minutosElement.textContent = minutos;
+            segundosElement.textContent = segundos;
+            milisegundosElement.textContent = milisegundos;
         }
 
 
