@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     <title>Cronômetro</title>
 
     <style>
-        html, body {
+        html,
+        body {
             height: 100vh;
             margin: 0;
         }
@@ -58,11 +60,13 @@
             font-size: 20px;
         }
 
-        #botaoPausar, #botaoContinuar {
+        #botaoPausar,
+        #botaoContinuar {
             display: none;
         }
     </style>
 </head>
+
 <body>
     <div class="card text-center">
         <div>
@@ -89,6 +93,7 @@
     </div>
 
     <script>
+
         const minutesElement = document.querySelector("#minutes");
         const secondsElement = document.querySelector("#seconds");
         const millisecondsElement = document.querySelector("#milliseconds");
@@ -96,59 +101,51 @@
         const botaoPausar = document.querySelector("#botaoPausar");
         const botaoContinuar = document.querySelector("#botaoContinuar");
         const botaoReset = document.querySelector("#botaoReset");
+
         botaoIniciar.addEventListener("click", iniciarContagem);
         botaoPausar.addEventListener("click", pausarContagem);
         botaoContinuar.addEventListener("click", continuarContagem);
         botaoReset.addEventListener("click", reiniciarContagem);
+
         let interval;
         let startTime;
         let elapsedTime = 0;
-        let pausado = false;
 
-        function iniciarContagem(){
-            if (!interval) {
-                startTime = Date.now() - elapsedTime;
-                interval = setInterval(atualizarTempo, 10);
-                botaoIniciar.style.display = "none";
-                botaoPausar.style.display = "inline";
-            }
+        function iniciarContagem() {
+            startTime = Date.now();
+            interval = setInterval(atualizarTempo, 10);
+            botaoIniciar.style.display = "none";
+            botaoPausar.style.display = "inline";
         }
 
-        function pausarContagem(){
-            if (interval) {
-                clearInterval(interval);
-                interval = null;
-                pausado = true;
-                botaoPausar.style.display = "none";
-                botaoContinuar.style.display = "inline";
-            }
+        function pausarContagem() {
+            clearInterval(interval);
+            interval = null;
+            botaoPausar.style.display = "none";
+            botaoContinuar.style.display = "inline";
         }
 
-        function continuarContagem(){
-            if (pausado) {
-                startTime = Date.now() - elapsedTime;
-                interval = setInterval(atualizarTempo, 10);
-                pausado = false;
-                botaoContinuar.style.display = "none";
-                botaoPausar.style.display = "inline";
-            }
+        function continuarContagem() {
+            startTime = Date.now() - elapsedTime;
+            interval = setInterval(atualizarTempo, 10);
+            botaoContinuar.style.display = "none";
+            botaoPausar.style.display = "inline";
+
         }
 
-        function reiniciarContagem(){
+        function reiniciarContagem() {
             clearInterval(interval);
             interval = null;
             elapsedTime = 0;
-            pausado = false;
             atualizarDisplay(0, 0, 0);
             botaoIniciar.style.display = "inline";
             botaoPausar.style.display = "none";
             botaoContinuar.style.display = "none";
         }
 
-        function atualizarTempo(){
+        function atualizarTempo() {
             const currentTime = Date.now();
             elapsedTime = currentTime - startTime;
-
             const minutes = Math.floor(elapsedTime / 60000);
             const seconds = Math.floor((elapsedTime % 60000) / 1000);
             const milliseconds = elapsedTime % 1000;
@@ -156,14 +153,14 @@
             atualizarDisplay(minutes, seconds, milliseconds);
         }
 
-        function atualizarDisplay(minutes, seconds, milliseconds){
+        function atualizarDisplay(minutes, seconds, milliseconds) {
             minutesElement.textContent = minutes;
             secondsElement.textContent = seconds;
             millisecondsElement.textContent = milliseconds;
         }
 
-        
-        document.addEventListener("keydown", (event) =>{
+
+        document.addEventListener("keydown", (event) => {
             if (event.key === "i" || event.key === "I") iniciarContagem();
             if (event.key === "p" || event.key === "P") pausarContagem();
             if (event.key === "c" || event.key === "C") continuarContagem();
@@ -171,4 +168,5 @@
         });
     </script>
 </body>
+
 </html>
